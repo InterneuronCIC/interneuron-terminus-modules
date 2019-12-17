@@ -1,0 +1,45 @@
+ <!-- Interneuron Observation App
+Copyright(C) 2019  Interneuron CIC
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+See the
+GNU General Public License for more details.
+You should have received a copy of the GNU General Public License
+along with this program.If not, see<http://www.gnu.org/licenses/>.  -->
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>TerminusModuleObservationChart</title>
+  <base href="/">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+
+</head>
+<body>
+  <app-root></app-root>
+</body>
+</html>
+<script type="text/javascript">
+
+
+  $(document).ready(function () {
+
+    $('form').on('focus', 'input[type=number]', function (e) {
+      $(this).on('mousewheel.disableScroll', function (e) {
+        e.preventDefault()
+      })
+    })
+    $('form').on('blur', 'input[type=number]', function (e) {
+      $(this).off('mousewheel.disableScroll')
+    })
+  });
+</script>

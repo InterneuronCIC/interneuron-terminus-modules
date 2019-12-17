@@ -1,0 +1,539 @@
+[  
+    {  
+       "chart_id":"nurseobschart",
+       "chartname":"Nursing Observation Chart",
+       "graph_id":"news2",
+       "graphname":"NEWS2",
+       "units":null,
+       "graphtype":"Ordinal",
+       "parameterkey":[  
+          "earlywarningscore"
+       ],
+       "parameterdomain":[  
+ 
+       ],
+       "secondaryparameterdomain":[  
+ 
+       ],
+       "ewsbandingrange":[ "news" 
+ 
+       ],
+       "parameterlabelsdomain":[  
+          "TOTAL"
+       ],
+       "scale":[  
+          "NEWS2-Scale1",
+          "NEWS2-Scale2"
+       ],
+       "ordinalparameterdomain":[  
+ 
+       ]
+    },
+    {  
+       "chart_id":"nurseobschart",
+       "chartname":"Nursing Observation Chart",
+       "graph_id":"respirations",
+       "graphname":"Respirations",
+       "units":"Breaths/min",
+       "graphtype":"Threshold",
+       "parameterkey":[  
+          "respirations"
+       ],
+       "parameterdomain":[  
+          9.0,
+          12.0,
+          15.0,
+          18.0,
+          21.0,
+          25.0
+       ],
+       "secondaryparameterdomain":[  
+ 
+       ],
+       "ewsbandingrange":[  
+          3.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          2.0,
+          3.0
+       ],
+       "parameterlabelsdomain":[  
+          "≤8",
+          "9-11",
+          "12-14",
+          "15-17",
+          "18-20",
+          "21-24",
+          "≥25"
+       ],
+       "scale":[  
+          "NEWS2-Scale1",
+          "NEWS2-Scale2"
+       ],
+       "ordinalparameterdomain":[  
+ 
+       ]
+    },
+    {  
+       "chart_id":"nurseobschart",
+       "chartname":"Nursing Observation Chart",
+       "graph_id":"oxygensaturations",
+       "graphname":"Oxygen Saturation",
+       "units":"%",
+       "graphtype":"Threshold",
+       "parameterkey":[  
+          "oxygensaturations"
+       ],
+       "parameterdomain":[  
+          92.0,
+          94.0,
+          96.0
+       ],
+       "secondaryparameterdomain":[  
+ 
+       ],
+       "ewsbandingrange":[  
+          3.0,
+          2.0,
+          1.0,
+          0.0
+       ],
+       "parameterlabelsdomain":[  
+          "≤91",
+          "92-93",
+          "94-95",
+          "≥96"
+       ],
+       "scale":[  
+          "NEWS2-Scale1"
+       ],
+       "ordinalparameterdomain":[  
+ 
+       ]
+    },
+    {  
+       "chart_id":"nurseobschart",
+       "chartname":"Nursing Observation Chart",
+       "graph_id":"copdcombinedoxygensaturations",
+       "graphname":"Oxygen Saturations",
+       "units":"%",
+       "graphtype":"Threshold",
+       "parameterkey":[  
+          "oxygensaturations"
+       ],
+       "parameterdomain":[  
+          84.0,
+          86.0,
+          88.0,
+          93.0
+       ],
+       "secondaryparameterdomain":[  
+          84.0,
+          86.0,
+          88.0,
+          92.5,
+          93.0,
+          95.0,
+          97.0
+       ],
+       "ewsbandingrange":[  
+          3.0,
+          2.0,
+          1.0,
+          0.0,
+          0.0,
+          1.0,
+          2.0,
+          3.0
+       ],
+       "parameterlabelsdomain":[  
+          "≤83",
+          "84-85",
+          "86-87",
+          "88-92",
+          "≥93:air",
+          "93-94:O₂",
+          "95-96:O₂",
+          "≥97:O₂"
+       ],
+       "scale":[  
+          "NEWS2-Scale2"
+       ],
+       "ordinalparameterdomain":[  
+ 
+       ]
+    },{
+      "chart_id": "nurseobschart",
+      "chartname": "Nursing Observation Chart",
+      "graph_id": "isonoxygen",
+      "graphname": "Air or Oxygen?",
+      "units": null,
+      "graphtype": "Ordinal",
+      "parameterkey": ["isonoxygen"],
+      "parameterdomain": [true, false],
+      "secondaryparameterdomain": [],
+      "ewsbandingrange": [0.0],
+      "parameterlabelsdomain": ["A=Air"],
+      "scale":["NEWS2-1", "NEWS2-2"],
+      "ordinalparameterdomain":["true","false"]
+  },{
+   "chart_id": "nurseobschart",
+   "chartname": "Nursing Observation Chart",
+   "graph_id": "oxygenflow",
+   "graphname": "Flow",
+   "units": "L/min",
+   "graphtype": "Ordinal",
+   "parameterkey": ["inspireoxygenlitrepermin"],
+   "parameterdomain": [],
+   "secondaryparameterdomain": [],
+   "ewsbandingrange": [2.0],
+   "parameterlabelsdomain": ["L/min"],
+   "scale":["NEWS2-1", "NEWS2-2"],
+   "ordinalparameterdomain":["true","false"]
+},{
+   "chart_id": "nurseobschart",
+   "chartname": "Nursing Observation Chart",
+   "graph_id": "oxygenpercentage",
+   "graphname": "Percentage",
+   "units": "%O₂",
+   "graphtype": "Ordinal",
+   "parameterkey": ["inspireoxygenpercentage"],
+   "parameterdomain": [],
+   "secondaryparameterdomain": [],
+   "ewsbandingrange": [0.0],
+   "parameterlabelsdomain": ["%O₂"],
+   "scale":["NEWS2-1", "NEWS2-2"],
+   "ordinalparameterdomain":["true","false"]
+},{
+        "chart_id": "nurseobschart",
+        "chartname": "Nursing Observation Chart",
+        "graph_id": "device",
+        "graphname": "Device",
+        "units": null,
+        "graphtype": "Ordinal",
+        "parameterkey": ["device"],
+        "parameterdomain": [],
+        "secondaryparameterdomain": [],
+        "ewsbandingrange": [0.0],
+        "parameterlabelsdomain": ["Device"],
+        "scale":["NEWS2-1", "NEWS2-2"],
+        "ordinalparameterdomain":[]
+    },
+    {  
+       "chart_id":"nurseobschart",
+       "chartname":"Nursing Observation Chart",
+       "graph_id":"bloodpressure",
+       "graphname":"Blood Pressure",
+       "units":"mmHg",
+       "graphtype":"Threshold",
+       "parameterkey":[  
+          "systolicbloodpressure",
+          "diastolicbloodpressure"
+       ],
+       "parameterdomain":[  
+          51.0,
+          61.0,
+          71.0,
+          81.0,
+          91.0,
+          101.0,
+          111.0,
+          121.0,
+          141.0,
+          161.0,
+          181.0,
+          201.0,
+          220.0
+       ],
+       "secondaryparameterdomain":[  
+ 
+       ],
+       "ewsbandingrange":[  
+          3.0,
+          3.0,
+          3.0,
+          3.0,
+          3.0,
+          2.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          3.0
+       ],
+       "parameterlabelsdomain":[  
+          "≤50",
+          "51-60",
+          "61-70",
+          "71-80",
+          "81-90",
+          "91-100",
+          "101-110",
+          "111-120",
+          "121-140",
+          "141-160",
+          "161-180",
+          "181-200",
+          "201-219",
+          "≥220"
+       ],
+       "scale":[  
+          "NEWS2-Scale1",
+          "NEWS2-Scale2"
+       ],
+       "ordinalparameterdomain":[  
+ 
+       ]
+    },
+    {  
+       "chart_id":"nurseobschart",
+       "chartname":"Nursing Observation Chart",
+       "graph_id":"pulse",
+       "graphname":"Pulse",
+       "units":"Beats/min",
+       "graphtype":"Threshold",
+       "parameterkey":[  
+          "pulse"
+       ],
+       "parameterdomain":[
+          31.0,
+          41.0,  
+          51.0,
+          61.0,
+          71.0,
+          81.0,
+          91.0,
+          101.0,
+          111.0,
+          121.0,
+          131.0
+       ],
+       "secondaryparameterdomain":[  
+ 
+       ],
+       "ewsbandingrange":[  
+          3.0,
+          3.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          1.0,
+          2.0,
+          2.0,
+          3.0
+       ],
+       "parameterlabelsdomain":[  
+          "≤30",
+          "31-40",
+          "41-50",
+          "51-60",
+          "61-70",
+          "71-80",
+          "81-90",
+          "91-100",
+          "101-110",
+          "111-120",
+          "121-130",
+          "≥131"
+       ],
+       "scale":[  
+          "NEWS2-Scale1",
+          "NEWS2-Scale2"
+       ],
+       "ordinalparameterdomain":[  
+ 
+       ]
+    },
+    {  
+       "chart_id":"nurseobschart",
+       "chartname":"Nursing Observation Chart",
+       "graph_id":"consciousness",
+       "graphname":"Consciousness",
+       "units":null,
+       "graphtype":"Ordinal",
+       "parameterkey":[  
+          "consciousness"
+       ],
+       "parameterdomain":[  
+ 
+       ],
+       "secondaryparameterdomain":[  
+ 
+       ],
+       "ewsbandingrange":[  
+          3.0,
+          3.0,
+          3.0,
+          3.0,
+          0.0
+       ],
+       "parameterlabelsdomain":[  
+          "U",
+          "P",
+          "V",
+          "Confusion",
+          "Alert"
+       ],
+       "scale":[  
+          "NEWS2-Scale1",
+          "NEWS2-Scale2"
+       ],
+       "ordinalparameterdomain":[  
+          "U",
+          "P",
+          "V",
+          "C",
+          "A"
+       ]
+    },
+    {  
+       "chart_id":"nurseobschart",
+       "chartname":"Nursing Observation Chart",
+       "graph_id":"temperature",
+       "graphname":"Temperature",
+       "units":"°C",
+       "graphtype":"Threshold",
+       "parameterkey":[  
+          "temperature"
+       ],
+       "parameterdomain":[  
+          35.1,
+          36.1,
+          37.1,
+          38.1,
+          39.1
+       ],
+       "secondaryparameterdomain":[  
+ 
+       ],
+       "ewsbandingrange":[  
+          3.0,
+          1.0,
+          0.0,
+          0.0,
+          1.0,
+          2.0
+       ],
+       "parameterlabelsdomain":[  
+          "≤35.0°",
+          "35.1–36.0°",
+          "36.1–37.0°",
+          "37.1–38.0°",
+          "38.1–39.0°",
+          "≥39.1°"
+       ],
+       "scale":[  
+          "NEWS2-Scale1",
+          "NEWS2-Scale2"
+       ],
+       "ordinalparameterdomain":[  
+ 
+       ]
+    }, {
+      "chart_id": "nurseobschart",
+      "chartname": "Nursing Observation Chart",
+      "graph_id": "painscoreatrest",
+      "graphname": "Pain at rest",
+      "units": "/ 10",
+      "graphtype": "Ordinal",
+      "parameterkey": ["painscoreatrest"],
+      "parameterdomain": [],
+      "secondaryparameterdomain": [],
+      "ewsbandingrange": [0.0],
+      "parameterlabelsdomain": ["Out of 10"],
+      "scale":["NEWS2-1", "NEWS2-2"],
+      "ordinalparameterdomain":[]
+   }, {
+        "chart_id": "nurseobschart",
+        "chartname": "Nursing Observation Chart",
+        "graph_id": "painscorewithmovement",
+        "graphname": "Pain moving",
+        "units": "/ 10",
+        "graphtype": "Ordinal",
+        "parameterkey": ["painscorewithmovement"],
+        "parameterdomain": [],
+        "secondaryparameterdomain": [],
+        "ewsbandingrange": [0.0],
+        "parameterlabelsdomain": ["Out of 10"],
+        "scale":["NEWS2-1", "NEWS2-2"],
+        "ordinalparameterdomain":[]
+    }, {
+        "chart_id": "nurseobschart",
+        "chartname": "Nursing Observation Chart",
+        "graph_id": "glucose",
+        "graphname": "Glucose",
+        "units": "mmol/L",
+        "graphtype": "Ordinal",
+        "parameterkey": ["glucose"],
+        "parameterdomain": [],
+        "secondaryparameterdomain": [],
+        "ewsbandingrange": [0.0],
+        "parameterlabelsdomain": ["mmol/L"],
+        "scale":["NEWS2-1", "NEWS2-2"],
+        "ordinalparameterdomain":[]
+    },{
+        "chart_id": "nurseobschart",
+        "chartname": "Nursing Observation Chart",
+        "graph_id": "bowelsopen",
+        "graphname": "Bowels Open",
+        "units": null,
+        "graphtype": "Ordinal",
+        "parameterkey": ["bowelsopen"],
+        "parameterdomain": [],
+        "secondaryparameterdomain": [],
+        "ewsbandingrange": [0.0],
+        "parameterlabelsdomain": ["Y/N"],
+        "scale":["NEWS2-1", "NEWS2-2"],
+        "ordinalparameterdomain":[]
+    },{
+        "chart_id": "nurseobschart",
+        "chartname": "Nursing Observation Chart",
+        "graph_id": "monitoring",
+        "graphname": "Monitoring",
+        "units": "hourly",
+        "graphtype": "Ordinal",
+        "parameterkey": ["monitoring"],
+        "parameterdomain": [],
+        "secondaryparameterdomain": [],
+        "ewsbandingrange": [0.0],
+        "parameterlabelsdomain": ["Hourly"],
+        "scale":["NEWS2-1", "NEWS2-2"],
+        "ordinalparameterdomain":[]
+    },{
+        "chart_id": "nurseobschart",
+        "chartname": "Nursing Observation Chart",
+        "graph_id": "escalationofcare",
+        "graphname": "Escalation",
+        "units": null,
+        "graphtype": "Ordinal",
+        "parameterkey": ["escalationofcare"],
+        "parameterdomain": [],
+        "secondaryparameterdomain": [],
+        "ewsbandingrange": [0.0],
+        "parameterlabelsdomain": ["Y/N"],
+        "scale":["NEWS2-1", "NEWS2-2"],
+        "ordinalparameterdomain":[]
+    },{
+        "chart_id": "nurseobschart",
+        "chartname": "Nursing Observation Chart",
+        "graph_id": "recordedby",
+        "graphname": "Recorded by",
+        "units": null,
+        "graphtype": "Ordinal",
+        "parameterkey": ["username"],
+        "parameterdomain": [],
+        "secondaryparameterdomain": [],
+        "ewsbandingrange": [0.0],
+        "parameterlabelsdomain": ["Initials"],
+        "scale":["NEWS2-1", "NEWS2-2"],
+        "ordinalparameterdomain":[]
+    }
+ ]

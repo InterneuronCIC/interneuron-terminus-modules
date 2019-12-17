@@ -1,0 +1,95 @@
+ <!-- Interneuron Observation App
+Copyright(C) 2019  Interneuron CIC
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+See the
+GNU General Public License for more details.
+You should have received a copy of the GNU General Public License
+along with this program.If not, see<http://www.gnu.org/licenses/>.  -->
+
+<div [hidden]="!hasEncounters" style="padding-left:10px">
+  <!--<select (change) ="passpid($event.target.value)" class="form-control" id="txtconsciousLevel">
+    <option value="027c3400-24cd-45c1-9e3d-0f4475336394">A</option>
+    <option value="04846d29-9723-4c02-b306-979da769b755">C</option>
+    <option value="0775362b-9d93-4c18-9e03-357c10d226f7">V</option>
+    <option value="17775da9-8e71-4a3f-9042-4cdcbf97efec">P</option>
+    <option value="1fa24c95-dc5c-4e33-be86-51ac7d3a1cfb">U</option>
+
+
+  </select>-->
+  <app-news-guidlines></app-news-guidlines>
+
+  <button type="button" style="display:none" data-toggle="modal" data-target="#obsModal" #openObsForm></button>
+
+  <div class="btn-group btn-group-sm">
+    <app-encounter-navigation (loadComplete)="encounterLoadComplete()" (clicked)="removeXaxisCss()"
+                              (encountersLoaded)="encountersListLoaded($event)" style="float:left;padding:5px;"></app-encounter-navigation>
+  </div>
+  <div class="btn-group">
+    <app-person-scaletype (click)="removeXaxisCss()"></app-person-scaletype>
+  </div>
+  <div class="btn-group" style="padding-left:5px;" *ngIf="isCurrentEncounter">
+    <button type="button" [hidden]="!obsLoaded" class="btn btn-success" data-toggle="modal" data-target="#obsModal" data-backdrop="static" data-keyboard="false" (click)="openObsModal()">
+      Add Observations
+    </button>
+  </div>
+  <div style="padding-left:5px;" *ngIf="!isCurrentEncounter">
+    <div class="badge badge-info text-left text-wrap">
+      Unable to add / edit observation for previous encounter
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <div *ngFor="let alert of alerts">
+        <alert [type]="alert.type" [dismissible]="true" [dismissOnTimeout]="alert.timeout"> <span [innerHtml]="alert.msg"></span></alert>
+      </div>
+    </div>
+  </div>
+  <div>
+    <app-observation-chart></app-observation-chart>
+  </div>
+  <!--<ng-template #observations>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">New Observation</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <app-new-observation></app-new-observation>
+    </div>
+  </ng-template>-->
+
+
+  <div class="modal" id="obsModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog  modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header" style="padding-top:10px;padding-bottom:2px;">
+          <h5 id="modalLabel">{{observationsFormHeader}}</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" style="padding:5px 5px 5px 5px">
+          <app-new-observation (loadComplete)="obsLoadComplete()" (updateFrameworkEvents)="obsUpdateFrameworkEvents($event)"></app-new-observation>
+        </div>
+        <div class="modal-footer" style="padding-top:5px;padding-bottom:5px;">
+          <button type="button" style="display:none" class="btn btn-secondary" data-dismiss="modal" #closObsForm>close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <app-information-popup></app-information-popup>
+  <app-delete-observationevent></app-delete-observationevent>
+</div>
+
+<div [hidden]="hasEncounters">
+  <div [hidden]="!showNoEncounterMsg">This patient does not have any inpatient admissions. </div>
+  <div [hidden]="showNoEncounterMsg">Please wait... </div>
+</div>
+

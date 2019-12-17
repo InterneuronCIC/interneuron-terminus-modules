@@ -1,0 +1,7 @@
+{
+  "uris": {
+    "baseuri": "DYNAMIC_API_URL",
+    "autonomicsbaseuri": "AUTONIMIS_URL/Autonomic"
+  },
+  "enablelogging": false
+}

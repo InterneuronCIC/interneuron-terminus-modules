@@ -1,0 +1,69 @@
+<!-- Interneuron Observation App
+Copyright(C) 2019  Interneuron CIC
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+See the
+GNU General Public License for more details.
+You should have received a copy of the GNU General Public License
+along with this program.If not, see<http://www.gnu.org/licenses/>.  -->
+
+<div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <!--<div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">  {{chartEvent.name}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>-->
+      <div class="card" style="margin-bottom:5px">
+
+        <div class="card-header">
+          {{obsNameHeader}}: {{ observationEvent.datefinished | date:'mediumDate' }} {{ observationEvent.datefinished | date:'shortTime' }}
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">
+            {{ (currentObservation.value=="true"? "Yes" : (currentObservation.value=="false"? "No" : (currentObservation.value=="null"? "Unanswered" : currentObservation.value))) }} {{chartEvent.units}}
+          </h5>
+          <p class="card-text">{{currentObservation.action}} {{currentObservation._createdby}}  on {{ currentObservation._createddate | date:'mediumDate' }} at {{ currentObservation._createddate | date:'shortTime' }}</p>
+
+
+        </div>
+      </div>
+
+      <div class="modal-footer" [hidden]="observations!=null && observations.length==0" style="border-top:0px;padding:0px 2px 6px 2px">
+        <button type="button" class="btn btn-primary" (click)="onClick('edit')" *ngIf="isCurrentEncounter">Amend</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" style="display:none" class="btn btn-secondary" data-dismiss="modal" #closeInfo>Close</button>
+      </div>
+      <div class="card" style="margin-bottom:0px" [hidden]="obsHistory.length==0">
+        <div class="card-body">
+          <i>History</i>
+        </div>
+        <div class="card-body" *ngFor="let o of obsHistory">
+          <h5 class="card-title" *ngIf="o.value==null">
+            <span class="text-danger">Removed by user</span>
+          </h5>
+          <h5 class="card-title" *ngIf="o.value!=null">
+            {{ (o.value=="true"? "Yes" : (o.value=="false"? "No" : (o.value=="null"? "Unanswered" :  o.value))) }} {{chartEvent.units}}
+          </h5>
+
+          <p class="card-text" *ngIf="o.reasonforamend">Reason for amend: <i>{{o.reasonforamend}} </i> </p>
+
+          <p class="card-text">{{o.action}} {{o._createdby}}  on {{ o._createddate | date:'mediumDate' }} at {{ o._createddate | date:'shortTime' }}</p>
+
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<button type="button" style="display:none" data-toggle="modal" data-target="#infoModal" #openInfo></button>
+

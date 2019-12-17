@@ -1,0 +1,555 @@
+<!-- Interneuron Observation App
+Copyright(C) 2019  Interneuron CIC
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+See the
+GNU General Public License for more details.
+You should have received a copy of the GNU General Public License
+along with this program.If not, see<http://www.gnu.org/licenses/>.  -->
+<div style="width:100%; padding:12px; padding-bottom:5px">
+  <form id="f1" [formGroup]="obsForm" (ngSubmit)="submitObs()">
+
+    <div class="form-group">
+      <label for="ddlpatientScale">Observation scale</label>
+      <select formControlName="patientScale" enterIsNext class="form-control" id="ddlpatientScale">
+        <option [value]="scale.observationscaletype_id" *ngFor="let scale of obsScales">{{scale.scaletypename}}</option>
+      </select>
+    </div>
+
+    <div formGroupName="genObs">
+      <div class="form-group" formGroupName="newsMandatory">
+        <label for="txtrespirationRate">Respiration rate (breaths per minute)</label>
+        <label [hidden]="obsForm['controls'].captureIncompleteObs.value" style="color:red;padding-left:2px"> *</label>
+        <input formControlName="respirationRate" wholeNumber enterIsNext type="number" class="form-control" id="txtrespirationRate" #firstElement>
+        <div *ngIf="obsForm['controls'].genObs['controls'].newsMandatory['controls'].respirationRate.invalid && (obsForm['controls'].genObs['controls'].newsMandatory['controls'].respirationRate.dirty || obsForm['controls'].genObs['controls'].newsMandatory['controls'].respirationRate.touched)"
+             class="alert alert-danger">
+
+          <div *ngIf="obsForm['controls'].genObs['controls'].newsMandatory['controls'].respirationRate.errors.required">
+            Respiration rate is required
+          </div>
+          <div *ngIf="obsForm['controls'].genObs['controls'].newsMandatory['controls'].respirationRate.errors.min">
+            Respiration rate can be 0-60
+          </div>
+          <div *ngIf="obsForm['controls'].genObs['controls'].newsMandatory['controls'].respirationRate.errors.max">
+            Respiration rate can be 0-60
+          </div>
+
+        </div>
+      </div>
+
+      <div class="form-group" formGroupName="newsMandatory">
+        <label for="txtoxygenSaturation">Oxygen saturations (%)</label>
+        <label [hidden]="obsForm['controls'].captureIncompleteObs.value" style="color:red;padding-left:2px"> *</label>
+
+        <input formControlName="oxygenSaturation" wholeNumber enterIsNext type="number" class="form-control" id="txtoxygenSaturation">
+
+        <div *ngIf="obsForm['controls'].genObs['controls'].newsMandatory['controls'].oxygenSaturation.invalid && (obsForm['controls'].genObs['controls'].newsMandatory['controls'].oxygenSaturation.dirty || obsForm['controls'].genObs['controls'].newsMandatory['controls'].oxygenSaturation.touched)"
+             class="alert alert-danger">
+
+          <div *ngIf="obsForm['controls'].genObs['controls'].newsMandatory['controls'].oxygenSaturation.errors.required">
+            Oxygen saturations is required
+          </div>
+          <div *ngIf="obsForm['controls'].genObs['controls'].newsMandatory['controls'].oxygenSaturation.errors.min">
+            Oxygen saturations can be 50-100%
+          </div>
+          <div *ngIf="obsForm['controls'].genObs['controls'].newsMandatory['controls'].oxygenSaturation.errors.max">
+            Oxygen saturations can be 50-100%
+          </div>
+        </div>
+
+      </div>
+
+      <!--<div class="form-check">
+        <input formControlName="supplementalOxygen" enterIsNext type="checkbox" class="form-check-input" id="chksupplementalOxygen">
+        <label for="chksupplementalOxygen">Supplemental oxygen?</label>
+      </div>-->
+      <div class="form-group">
+        <label for="chksupplementalOxygen">Supplemental oxygen?</label>
+        <label [hidden]="obsForm['controls'].captureIncompleteObs.value" style="color:red;padding-left:2px"> *</label>
+        <select formControlName="supplementalOxygen" enterIsNext class="form-control" id="chksupplementalOxygen">
+          <option value="null">Unanswered</option>
+          <option value="true">Yes</option>
+          <option value="false">No</option>
+        </select>
+        <div *ngIf="obsForm['controls'].genObs['controls'].supplementalOxygen.invalid && (obsForm['controls'].genObs['controls'].supplementalOxygen.dirty || obsForm['controls'].genObs['controls'].supplementalOxygen.touched)"
+             class="alert alert-danger">
+          <div *ngIf="obsForm['controls'].genObs['controls'].supplementalOxygen.errors.unanswered">
+            Supplemental oxygen is required
+          </div>
+        </div>
+      </div>
+      <div formGroupName="oxyGrp" style="padding-left:20px" [hidden]="obsForm['controls'].genObs['controls'].supplementalOxygen.value!='true'">
+        <div style="padding-bottom:10px">
+          Oxygen Device         <label [hidden]="obsForm['controls'].captureIncompleteObs.value" style="color:red;padding-left:2px"> *</label>
+        </div>
+        <div class="form-check" *ngFor="let od of oxygenDevices">
+          <input formControlName="oxygenDevice" enterIsNext class="form-check-input" [id]="od.oxygendevices_id" type="radio" [value]="od.code">
+          <label [for]="od.oxygendevices_id" class="form-check-label">
+            {{od.name}}
+          </label>
+          <div class="form-group"></div>
+        </div>
+        <div *ngIf="obsForm['controls'].genObs['controls'].oxyGrp['controls'].oxygenDevice.invalid && (obsForm['controls'].genObs['controls'].oxyGrp['controls'].oxygenDevice.dirty || obsForm['controls'].genObs['controls'].oxyGrp['controls'].oxygenDevice.touched)"
+             class="alert alert-danger">
+          <div *ngIf="obsForm['controls'].genObs['controls'].oxyGrp['controls'].oxygenDevice.errors.required">
+            Oxygen device is required
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="txtinspiredOxygenLitrePerMin">Inspired oxygen (L/min)</label>
+          <label [hidden]="obsForm['controls'].captureIncompleteObs.value" style="color:red;padding-left:2px"> *</label>
+
+          <input formControlName="inspiredOxygenLitrePerMin" wholeNumber enterIsNext type="number" class="form-control" id="txtinspiredOxygenLitrePerMine">
+          <div *ngIf="obsForm['controls'].genObs['controls'].oxyGrp['controls'].inspiredOxygenLitrePerMin.invalid && (obsForm['controls'].genObs['controls'].oxyGrp['controls'].inspiredOxygenLitrePerMin.dirty || obsForm['controls'].genObs['controls'].oxyGrp['controls'].inspiredOxygenLitrePerMin.touched)"
+               class="alert alert-danger">
+
+            <div *ngIf="obsForm['controls'].genObs['controls'].oxyGrp['controls'].inspiredOxygenLitrePerMin.errors.required">
+              Inspired oxygen is required
+            </div>
+            <div *ngIf="obsForm['controls'].genObs['controls'].oxyGrp['controls'].inspiredOxygenLitrePerMin.errors.min">
+              Inspired oxygen can be 0-100
+            </div>
+            <div *ngIf="obsForm['controls'].genObs['controls'].oxyGrp['controls'].inspiredOxygenLitrePerMin.errors.max">
+              Inspired oxygen can be 0-100
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="txtinspiredOxygenPercentage">Inspired oxygen (%): </label>
+          <input formControlName="inspiredOxygenPercentage" wholeNumber enterIsNext type="number" class="form-control" id="txtinspiredOxygenPercentage">
+          <div *ngIf="obsForm['controls'].genObs['controls'].oxyGrp['controls'].inspiredOxygenPercentage.invalid && (obsForm['controls'].genObs['controls'].oxyGrp['controls'].inspiredOxygenPercentage.dirty || obsForm['controls'].genObs['controls'].oxyGrp['controls'].inspiredOxygenPercentage.touched)"
+               class="alert alert-danger">
+
+            <div *ngIf="obsForm['controls'].genObs['controls'].oxyGrp['controls'].inspiredOxygenPercentage.errors.required">
+              Inspired oxygen percentage is required
+            </div>
+            <div *ngIf="obsForm['controls'].genObs['controls'].oxyGrp['controls'].inspiredOxygenPercentage.errors.min">
+              Inspired oxygen percentage can be 0-100%
+            </div>
+            <div *ngIf="obsForm['controls'].genObs['controls'].oxyGrp['controls'].inspiredOxygenPercentage.errors.max">
+              Inspired oxygen percentage can be 0-100%
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="form-group" formGroupName="newsMandatory">
+        <label for="txtsystolicBP">Systolic BP (mmHg)  </label>
+        <label [hidden]="obsForm['controls'].captureIncompleteObs.value" style="color:red;padding-left:2px"> *</label>
+
+        <input formControlName="systolicBP" wholeNumber type="number" enterIsNext class="form-control" id="txtsystolicBP">
+        <div *ngIf="obsForm['controls'].genObs['controls'].newsMandatory['controls'].systolicBP.invalid && (obsForm['controls'].genObs['controls'].newsMandatory['controls'].systolicBP.dirty || obsForm['controls'].genObs['controls'].newsMandatory['controls'].systolicBP.touched)"
+             class="alert alert-danger">
+
+          <div *ngIf="obsForm['controls'].genObs['controls'].newsMandatory['controls'].systolicBP.errors.required">
+            Systolic BP  is required
+          </div>
+          <div *ngIf="obsForm['controls'].genObs['controls'].newsMandatory['controls'].systolicBP.errors.min">
+            Systolic can be 50–300 and has to be greater than Diastolic
+          </div>
+          <div *ngIf="obsForm['controls'].genObs['controls'].newsMandatory['controls'].systolicBP.errors.max">
+            Systolic BP can be 50–300
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group" formGroupName="newsMandatory">
+        <label for="txtdiastolicBP">Diastolic BP (mmHg)</label>
+        <label [hidden]="obsForm['controls'].captureIncompleteObs.value" style="color:red;padding-left:2px"> *</label>
+
+        <input formControlName="diastolicBP" wholeNumber enterIsNext type="number" class="form-control" id="txtdiastolicBP">
+
+        <div *ngIf="obsForm['controls'].genObs['controls'].newsMandatory['controls'].diastolicBP.invalid && (obsForm['controls'].genObs['controls'].newsMandatory['controls'].diastolicBP.dirty || obsForm['controls'].genObs['controls'].newsMandatory['controls'].diastolicBP.touched)"
+             class="alert alert-danger">
+
+          <div *ngIf="obsForm['controls'].genObs['controls'].newsMandatory['controls'].diastolicBP.errors.required">
+            Diastolic BP is required
+          </div>
+          <div *ngIf="obsForm['controls'].genObs['controls'].newsMandatory['controls'].diastolicBP.errors.min">
+            Diastolic BP can be 10–150
+          </div>
+          <div *ngIf="obsForm['controls'].genObs['controls'].newsMandatory['controls'].diastolicBP.errors.max">
+            Diastolic BP can be 10–150
+          </div>
+        </div>
+
+
+      </div>
+      <div class="form-group">
+        Position
+        <div class="form-check">
+          <input formControlName="positionBP" enterIsNext value="Standing" type="radio" class="form-check-input" id="txtPositionStanding">
+          <label class="form-check-label">
+            Standing
+          </label>
+        </div>
+
+        <div class="form-check">
+          <input formControlName="positionBP" enterIsNext value="Lying" type="radio" class="form-check-input" id="txtPositionLying">
+          <label class="form-check-label">
+            Lying
+          </label>
+        </div>
+        <div class="form-check">
+          <input formControlName="positionBP" enterIsNext value="Sitting" type="radio" class="form-check-input" id="txtPositionSitting">
+          <label class="form-check-label">
+            Sitting
+          </label>
+        </div>
+      </div>
+
+      <div class="form-group" formGroupName="newsMandatory">
+        <label for="txtpulseRate">Pulse rate (Bpm) </label>
+        <label [hidden]="obsForm['controls'].captureIncompleteObs.value" style="color:red;padding-left:2px"> *</label>
+
+        <input formControlName="pulseRate" wholeNumber enterIsNext type="number" class="form-control" id="txtpulseRate">
+
+        <div *ngIf="obsForm['controls'].genObs['controls'].newsMandatory['controls'].pulseRate.invalid && (obsForm['controls'].genObs['controls'].newsMandatory['controls'].pulseRate.dirty || obsForm['controls'].genObs['controls'].newsMandatory['controls'].pulseRate.touched)"
+             class="alert alert-danger">
+
+          <div *ngIf="obsForm['controls'].genObs['controls'].newsMandatory['controls'].pulseRate.errors.required">
+            Pulse rate is required
+          </div>
+          <div *ngIf="obsForm['controls'].genObs['controls'].newsMandatory['controls'].pulseRate.errors.min">
+            Pulse rate can be 10–250
+          </div>
+          <div *ngIf="obsForm['controls'].genObs['controls'].newsMandatory['controls'].pulseRate.errors.max">
+            Pulse rate can be 10–250
+          </div>
+        </div>
+
+
+      </div>
+
+      <div class="form-group" formGroupName="newsMandatory">
+        <label for="txtconsciousLevel">Conscious level </label>
+        <label [hidden]="obsForm['controls'].captureIncompleteObs.value" style="color:red;padding-left:2px"> *</label>
+
+        <!--<input formControlName="consciousLevel" class="form-control" id="txtconsciousLevel">-->
+        <select formControlName="consciousLevel" enterIsNext class="form-control" id="txtconsciousLevel">
+          <option value="A">(A)lert</option>
+          <option value="C">(C)onfusion-new</option>
+          <option value="V">(V)oice</option>
+          <option value="P">(P)ain</option>
+          <option value="U">(U)nresponsive</option>
+        </select>
+
+        <div *ngIf="obsForm['controls'].genObs['controls'].newsMandatory['controls'].consciousLevel.invalid && (obsForm['controls'].genObs['controls'].newsMandatory['controls'].consciousLevel.dirty || obsForm['controls'].genObs['controls'].newsMandatory['controls'].consciousLevel.touched)"
+             class="alert alert-danger">
+          <div *ngIf="obsForm['controls'].genObs['controls'].newsMandatory['controls'].consciousLevel.errors.required">
+            Conscious level is required
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group" formGroupName="newsMandatory">
+        <label for="txttemperature">Temperature (°C) </label>
+        <label [hidden]="obsForm['controls'].captureIncompleteObs.value" style="color:red;padding-left:2px"> *</label>
+
+        <input formControlName="temperature" positiveNumbersOnly enterIsNext type="number" class="form-control" id="txttemperature">
+
+        <div *ngIf="obsForm['controls'].genObs['controls'].newsMandatory['controls'].temperature.invalid && (obsForm['controls'].genObs['controls'].newsMandatory['controls'].temperature.dirty || obsForm['controls'].genObs['controls'].newsMandatory['controls'].temperature.touched)"
+             class="alert alert-danger">
+
+          <div *ngIf="obsForm['controls'].genObs['controls'].newsMandatory['controls'].temperature.errors.required">
+            Temperature is required
+          </div>
+          <div *ngIf="obsForm['controls'].genObs['controls'].newsMandatory['controls'].temperature.errors.min">
+            Temperature can be 30–45
+          </div>
+          <div *ngIf="obsForm['controls'].genObs['controls'].newsMandatory['controls'].temperature.errors.max">
+            Temperature can be 30–45
+          </div>
+        </div>
+
+
+      </div>
+
+      <div class="form-group">
+        <label for="txtpainScaleRest">Pain scale (rest):</label>
+        <input formControlName="painScaleRest" wholeNumber enterIsNext type="number" class="form-control" id="txtpainScaleRest">
+
+        <div *ngIf="obsForm['controls'].genObs['controls'].painScaleRest.invalid && (obsForm['controls'].genObs['controls'].painScaleRest.dirty || obsForm['controls'].genObs['controls'].painScaleRest.touched)"
+             class="alert alert-danger">
+          <div *ngIf="obsForm['controls'].genObs['controls'].painScaleRest.errors.min">
+            Pain scale can be 0–10
+          </div>
+          <div *ngIf="obsForm['controls'].genObs['controls'].painScaleRest.errors.max">
+            Pain scale can be 0–10
+          </div>
+        </div>
+
+      </div>
+
+      <div class="form-group">
+        <label for="txtpainScaleMovement">Pain scale (movement):</label>
+        <input formControlName="painScaleMovement" wholeNumber enterIsNext type="number" class="form-control" id="txtpainScaleMovement">
+
+        <div *ngIf="obsForm['controls'].genObs['controls'].painScaleMovement.invalid && (obsForm['controls'].genObs['controls'].painScaleMovement.dirty || obsForm['controls'].genObs['controls'].painScaleMovement.touched)"
+             class="alert alert-danger">
+          <div *ngIf="obsForm['controls'].genObs['controls'].painScaleMovement.errors.min">
+            Pain scale can be 0–10
+          </div>
+          <div *ngIf="obsForm['controls'].genObs['controls'].painScaleMovement.errors.max">
+            Pain scale can be 0–10
+          </div>
+        </div>
+
+
+      </div>
+
+    </div>
+    <div formGroupName="otherObs">
+
+      <div class="form-group">
+        <label for="txtGlucose">Glucose:</label>
+        <input formControlName="glucose" positiveNumbersOnly enterIsNext type="number" class="form-control" id="txtGlucose">
+
+
+        <div *ngIf="obsForm['controls'].otherObs['controls'].glucose.invalid && (obsForm['controls'].otherObs['controls'].glucose.dirty || obsForm['controls'].otherObs['controls'].glucose.touched)"
+             class="alert alert-danger">
+
+
+          <div *ngIf="obsForm['controls'].otherObs['controls'].glucose.errors.min">
+            Glucose can be 0–50
+          </div>
+          <div *ngIf="obsForm['controls'].otherObs['controls'].glucose.errors.max">
+            Glucose can be 0–50
+          </div>
+        </div>
+      </div>
+
+
+      <div class="form-group">
+        <!--<div class="form-check">
+          <input formControlName="bowelsOpen" enterIsNext type="checkbox" class="form-check-input" id="chkbowelsOpen"> <label for="chkbowelsOpen">Bowels open?</label>
+        </div>-->
+        <label for="chkbowelsOpen">Bowels open?</label>
+        <select formControlName="bowelsOpen" enterIsNext class="form-control" id="chkbowelsOpen">
+          <option value="null">Unanswered</option>
+          <option value="true">Yes</option>
+          <option value="false">No</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="txtheight">Height (cm):</label>
+        <input formControlName="height" positiveNumbersOnly enterIsNext type="number" class="form-control" id="txtheight">
+
+        <div *ngIf="obsForm['controls'].otherObs['controls'].height.invalid && (obsForm['controls'].otherObs['controls'].height.dirty || obsForm['controls'].otherObs['controls'].height.touched)"
+             class="alert alert-danger">
+
+          <div *ngIf="obsForm['controls'].otherObs['controls'].height.errors.min">
+            Height can be 1–400
+          </div>
+          <div *ngIf="obsForm['controls'].otherObs['controls'].height.errors.max">
+            Height can be 1–400
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="txtweight">Weight (kg)</label>
+        <input formControlName="weight" positiveNumbersOnly enterIsNext type="number" class="form-control" id="txtweight">
+        <div *ngIf="obsForm['controls'].otherObs['controls'].weight.invalid && (obsForm['controls'].otherObs['controls'].weight.dirty || obsForm['controls'].otherObs['controls'].weight.touched)"
+             class="alert alert-danger">
+
+
+          <div *ngIf="obsForm['controls'].otherObs['controls'].weight.errors.min">
+            Weight can be 0.1–1000kg
+          </div>
+          <div *ngIf="obsForm['controls'].otherObs['controls'].weight.errors.max">
+            Weight can be 0.1–1000kg
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="form-group">
+      <label for="txtmonitoringFrequency">Monitoring frequency (hourly)</label>
+      <label [hidden]="obsForm['controls'].captureIncompleteObs.value" style="color:red;padding-left:2px"> *</label>
+      <!--<input formControlName="monitoringFrequency" positiveNumbersOnly enterIsNext type="number" class="form-control" id="txtmonitoringFrequency">-->
+      <select formControlName="monitoringFrequency" enterIsNext class="form-control" id="txtmonitoringFrequency">
+        <option value="null">Unanswered</option>
+        <option value="0.08">5 minutes (0.08 hour)</option>
+        <option value="0.25">15 minutes (0.25 hour)</option>
+        <option value="0.5">30 minutes (0.5 hour)</option>
+        <option value="1">1 hour</option>
+        <option value="2">2 hours</option>
+        <option value="4">4 hours</option>
+        <option value="6">6 hours</option>
+      </select>
+      <!--<div *ngIf="obsForm['controls'].monitoringFrequency.invalid && (obsForm['controls'].monitoringFrequency.dirty || obsForm['controls'].monitoringFrequency.touched)"
+           class="alert alert-danger">
+
+        <div *ngIf="obsForm['controls'].monitoringFrequency.errors.required">
+          Monitoring frequency is required
+        </div>
+        <div *ngIf="obsForm['controls'].monitoringFrequency.errors.min">
+          Monitoring frequency can be 0.1 – 12
+        </div>
+        <div *ngIf="obsForm['controls'].monitoringFrequency.errors.max">
+          Monitoring frequency can be 0.1 – 12
+        </div>
+      </div>-->
+      <div *ngIf="obsForm['controls'].monitoringFrequency.invalid && (obsForm['controls'].monitoringFrequency.dirty || obsForm['controls'].monitoringFrequency.touched)"
+           class="alert alert-danger">
+        <div *ngIf="obsForm['controls'].monitoringFrequency.errors.unanswered">
+          Monitoring frequency is required
+        </div>
+      </div>
+    </div>
+
+
+
+    <div formGroupName="otherObs">
+      <div class="form-group">
+        <label for="chkisPatientSick">Does the patient look sick?</label>
+        <label [hidden]="obsForm['controls'].captureIncompleteObs.value" style="color:red;padding-left:2px"> *</label>
+        <select formControlName="isPatientSick" enterIsNext class="form-control" id="chkisPatientSick">
+          <option value=null>Unanswered</option>
+          <option value=true>Yes</option>
+          <option value=false>No</option>
+        </select>
+        <div *ngIf="obsForm['controls'].otherObs['controls'].isPatientSick.invalid && (obsForm['controls'].otherObs['controls'].isPatientSick.dirty || obsForm['controls'].otherObs['controls'].isPatientSick.touched)"
+             class="alert alert-danger">
+          <div *ngIf="obsForm['controls'].otherObs['controls'].isPatientSick.errors.unanswered">
+            Required
+          </div>
+        </div>
+      </div>
+      <div style="padding-left:20px" [hidden]="obsForm['controls'].otherObs['controls'].isPatientSick.value != 'true'">
+        <div class="form-group">
+          <label for="chkcouldBeInfection">Could this be due to an infection?</label>
+          <label [hidden]="obsForm['controls'].captureIncompleteObs.value" style="color:red;padding-left:2px"> *</label>
+          <select formControlName="couldBeInfection" enterIsNext class="form-control" id="chkcouldBeInfection">
+            <option value=null>Unanswered</option>
+            <option value=true>Yes</option>
+            <option value=false>No</option>
+          </select>
+          <div *ngIf="obsForm['controls'].otherObs['controls'].couldBeInfection.invalid && (obsForm['controls'].otherObs['controls'].couldBeInfection.dirty || obsForm['controls'].otherObs['controls'].couldBeInfection.touched)"
+               class="alert alert-danger">
+            <div *ngIf="obsForm['controls'].otherObs['controls'].couldBeInfection.errors.unanswered">
+              Required
+            </div>
+          </div>
+        </div>
+        <div class="form-group" [hidden]="obsForm['controls'].otherObs['controls'].couldBeInfection.value != 'true'">
+          <label class="badge badge-info" style="padding:5px 5px 5px 5px; color:white">Please escalate and complete inpatient sepsis screening tool</label>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="chkconcernsAboutPatient">Do you have any other concerns about this patient?</label>
+        <label [hidden]="obsForm['controls'].captureIncompleteObs.value" style="color:red;padding-left:2px"> *</label>
+        <select formControlName="concernsAboutPatient" enterIsNext class="form-control" id="chkconcernsAboutPatient">
+          <option value=null>Unanswered</option>
+          <option value=true>Yes</option>
+          <option value=false>No</option>
+        </select>
+        <div *ngIf="obsForm['controls'].otherObs['controls'].concernsAboutPatient.invalid && (obsForm['controls'].otherObs['controls'].concernsAboutPatient.dirty || obsForm['controls'].otherObs['controls'].concernsAboutPatient.touched)"
+             class="alert alert-danger">
+          <div *ngIf="obsForm['controls'].otherObs['controls'].concernsAboutPatient.errors.unanswered">
+            Required
+          </div>
+        </div>
+      </div>
+      <div class="form-group" [hidden]="obsForm['controls'].otherObs['controls'].concernsAboutPatient.value != 'true'">
+        <label class="badge badge-info" style="padding:5px 5px 5px 5px; color:white">Please refer to Acute Intervention Team (AIT) on bleep 665 or Vocera</label>
+      </div>
+    </div>
+    <div class="form-group">
+      <!--<div class="form-check">
+        <input formControlName="escalationofCare" enterIsNext type="checkbox" class="form-check-input" id="chkescalationofCare">
+        <label for="chkescalationofCare">Have you escalated care?</label>
+      </div>-->
+      <label for="chkescalationofCare">Have you escalated care?</label>
+      <select formControlName="escalationofCare" enterIsNext class="form-control" id="chkescalationofCare">
+        <option value=null>Unanswered</option>
+        <option value=true>Yes</option>
+        <option value=false>No</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Observation Date</label>
+
+      <input readonly type="text" class="form-control mb-3" enterIsNext placeholder="Obsevation Date" formControlName="observationDate"
+             bsDatepicker [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY', containerClass: 'theme-default', adaptivePosition: true }" [minDate]="minDate" [maxDate]="maxDate" />
+
+      <!--<div *ngIf="obsForm['controls'].observationDate.invalid && (obsForm['controls'].observationDate.dirty || obsForm['controls'].observationDate.touched)"
+           class="alert alert-danger">
+
+        <div *ngIf="obsForm['controls'].observationDate.errors.required">
+          Observation Date is required.
+        </div>
+      </div>-->
+
+    </div>
+    <div class="form-group">
+      <label>Observation Time</label>
+      <timepicker [minuteStep]="1" [showMeridian]="false" [formControlName]="'observationTime'"></timepicker>
+
+      <div *ngIf="obsForm['controls'].observationTime.invalid && (obsForm['controls'].observationTime.dirty || obsForm['controls'].observationTime.touched)"
+           class="alert alert-danger">
+        <!--<div *ngIf="obsForm['controls'].observationTime.errors.required">
+          Observation Time is required.
+        </div>-->
+        <div *ngIf="obsForm['controls'].observationTime.errors.isEmpty">
+          Observation datetime is required.
+        </div>
+        <div *ngIf="obsForm['controls'].observationTime.errors.afterDischarge">
+          Observation datetime cannot be after discharge datetime
+        </div>
+        <div *ngIf="obsForm['controls'].observationTime.errors.inFuture">
+          Observation datetime cannot be in future
+        </div>
+
+
+      </div>
+    </div>
+
+    <div class="form-group" [hidden]="!oldObservations">
+      <label>Reason for amend</label>
+      <label> *</label>
+      <textarea class="form-control" enterIsNext formControlName="reasonForAmend" rows="5" cols="50"></textarea>
+      <div *ngIf="obsForm['controls'].reasonForAmend.invalid && (obsForm['controls'].reasonForAmend.dirty || obsForm['controls'].reasonForAmend.touched)"
+           class="alert alert-danger">
+        <div *ngIf="obsForm['controls'].reasonForAmend.errors.required">
+          Reason for amend is required
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group" [hidden]="!obsForm['controls'].captureIncompleteObs.value">
+      <label>Reason for incomplete observations</label>
+      <label> *</label>
+      <textarea class="form-control" enterIsNext formControlName="reasonForIncomplete" rows="5" cols="50"></textarea>
+      <div *ngIf="obsForm['controls'].reasonForIncomplete.invalid && (obsForm['controls'].reasonForIncomplete.dirty || obsForm['controls'].reasonForIncomplete.touched)"
+           class="alert alert-danger">
+        <div *ngIf="obsForm['controls'].reasonForIncomplete.errors.required">
+          Reason for incomplete observations is required
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <button type="submit" id="submitButton" style="width:100%" [disabled]="disableSubmit">Submit</button>
+    </div>
+
+
+    <div class="form-check" style="padding-bottom:10px;float:right">
+      <input formControlName="captureIncompleteObs" enterIsNext type="checkbox" class="form-check-input" id="chkcaptureIncompleteObs" />
+      <label for="chkcaptureIncompleteObs">Capture Incomplete Set of Observations</label>
+    </div>
+    <br />
+
+    <div class="form-group" [hidden]="obsForm.valid">
+      <label style="padding:5px" class="alert-danger">Please fill in all the fields that are marked * or select "Capture Incomplete Set of Observations" to submit a partial set.</label>
+    </div>
+  </form>
+</div>

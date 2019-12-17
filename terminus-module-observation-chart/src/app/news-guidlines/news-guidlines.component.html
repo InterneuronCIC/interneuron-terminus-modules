@@ -1,0 +1,100 @@
+<!-- Interneuron Observation App
+Copyright(C) 2019  Interneuron CIC
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+See the
+GNU General Public License for more details.
+You should have received a copy of the GNU General Public License
+along with this program.If not, see<http://www.gnu.org/licenses/>.  -->
+
+<div class="modal fade" id="guidanceModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="card" style="margin-bottom:5px">
+        <div class="card-body">
+          <h4>  NEWS2 Score: <span class="badge" [ngClass]="backColor"> {{ewsScoreHeader}}</span> </h4>
+
+          <div style="padding-top:6px"><i><b>Regardless of the NEWS2 score, if you have concerns please discuss with the Clinical Practitioner for the Acute Intervention Team (Bleep 665 or Vocera).</b></i></div>
+        </div>
+        <div class="card-body" style="padding-top:0px">
+
+          <div style="padding-bottom:0px">
+            <table style="text-align:left" class="table table-sm table-bordered">
+              <thead>
+                <tr style="color:white">
+                  <th style="background-color:#4274BA" scope="col">NEWS Score</th>
+                  <th style="background-color:#4274BA" scope="col">Frequency of monitoring</th>
+                  <th style="background-color:#4274BA" scope="col">Clinical response</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row" class="EWS_LOW">0</th>
+                  <td>Minimum 12 hourly</td>
+                  <td>
+                    <ul>
+                      <li>Continue routine NEWS 2 monitoring</li>
+                    </ul>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row" class="EWS_LOW">
+                    Total 1–4
+                  </th>
+                  <td>Minimum 4–6 hourly</td>
+                  <td>
+                    <ul>
+                      <li>Inform registered nurse, who must assess the patient</li>
+                      <li>Registered nurse to decide whether increased frequency of monitoring and/or escalation of care is required</li>
+                    </ul>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row" class="EWS_LOW-MEDIUM">3 in single parameter</th>
+                  <td>Minimum 1 hourly</td>
+                  <td>
+                    <ul><li>Registered nurse to refer immediately to the Medical Emergency Team on 7777 or Vocera</li></ul>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row" class="EWS_MEDIUM">Total 5 - 6</th>
+                  <td>Minimum 1 hourly</td>
+                  <td>
+                    <ul>
+                      <li>Registered nurse to immediately inform the AIT Clinical Practitioner on Bleep 665 or Vocera</li>
+                    </ul>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row" class="EWS_HIGH">Total 7 or more</th>
+                  <td>
+                    Continuous monitoring of vital signs
+                  </td>
+                  <td>
+                    <ul>
+                      <li>
+                        Registered nurse to refer immediately to the Medical Emergency Team on 7777 or Vocera
+                      </li>
+                    </ul>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer" style="border-top:0px;padding:0px 2px 6px 2px">
+        <!--<button type="button" class="btn btn-primary" (click)="amendObservationEvent()">Amend</button>
+        <button type="button" class="btn btn-danger" (click)="openConfirmDialog()">Remove</button>-->
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" #closeGuidance>Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<button type="button" style="display:none" data-toggle="modal" data-target="#guidanceModal" #openGuidance>Open Guidance</button>
