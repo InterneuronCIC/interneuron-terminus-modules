@@ -22,7 +22,7 @@
     "@angular/platform-browser-dynamic": "~7.2.0",
     "@angular/router": "~7.2.0",
     "angular-web-storage": "^7.0.0-beta.1",
-    "bootstrap": "4.1.1",
+    "bootstrap": "4.3.1",
     "core-js": "^2.5.4",
     "d3": "^5.9.7",
     "document-register-element": "^1.7.2",
