@@ -57,6 +57,6 @@
     "typescript": "~3.2.2",
     "popper.js": "^1.15.0",
     "bootstrap": "^4.3.1",
-    "jquery": "^3.4.1"
+    "jquery": "^3.5.0"
   }
 }
